@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KitchenTales — Turn Spoken Voice Memos Into Heirloom Recipes | Hacktoberfest 2026</title>
+  <meta name="description" content="KitchenTales transforms messy spoken voice memos from loved ones into structured, beautiful heirloom recipe cards using open-source Gemma AI and ElevenLabs voice guidance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍲</text></svg>">
+</head>
+<body>
+
+  <!-- Ambient 3D Background Lighting Mesh -->
+  <div class="ambient-mesh" aria-hidden="true">
+    <div class="bg-orb orb-terracotta"></div>
+    <div class="bg-orb orb-saffron"></div>
+    <div class="bg-orb orb-sage"></div>
+    <div class="bg-orb orb-gemma"></div>
+  </div>
+
+  <!-- App Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="#" class="brand-wrapper">
+        <div class="brand-icon-box">🍲</div>
+        <div>
+          <h1 class="brand-title">Kitchen<span>Tales</span></h1>
+        </div>
+        <span class="brand-badge">Open AI Heirloom</span>
+      </a>
+
+      <nav class="header-nav">
+        <span class="hackathon-badge">
+          <span>🎃</span>
+          <span>Hacktoberfest 2026: Build for a Friend</span>
+        </span>
+        <button id="navVaultBtn" class="nav-pill-btn" title="Personal Heirloom Recipe Vault">
+          <span>📖</span> <span class="nav-text">Vault</span> <span id="vaultBadge" class="vault-counter">0</span>
+        </button>
+        <button id="navOpenWhyBtn" class="nav-pill-btn" title="Why Open Innovation Matters">
+          <span>💡</span> <span class="nav-text">Why Open AI?</span>
+        </button>
+        <button id="navDevExportBtn" class="nav-pill-btn" title="DEV.to Submission Template">
+          <span>📝</span> <span class="nav-text">DEV Write-Up</span>
+        </button>
+        <button id="navSettingsBtn" class="nav-pill-btn" title="AI & Voice Settings">
+          <span>⚙️</span> <span class="nav-text">Gemma / Voice</span>
+        </button>
+        <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Theme" aria-label="Toggle Dark/Light Mode">
+          🌙
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-wrapper">
+    
+    <!-- Hero Banner with 3D Spatial Depth -->
+    <section class="hero-banner">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <span>✨</span> Powered by Open-Weight Google Gemma & ElevenLabs
+        </div>
+        <h2 class="hero-title">
+          Turn your loved one's <span class="text-3d-gradient">voice memos</span> into cherished heirloom recipes.
+        </h2>
+        <p class="hero-desc">
+          Built for the friends and grandparents who never write anything down. Drop in an unmeasured voice note, and let open-source AI preserve their exact words, culinary secrets, and soul into permanent kitchen keepsakes.
+        </p>
+        <div class="hero-stats-row">
+          <div class="stat-item-3d">
+            <span class="stat-val">100% Local</span>
+            <span class="stat-lbl">Private & Offline</span>
+          </div>
+          <div class="stat-item-3d">
+            <span class="stat-val">Gemma 2</span>
+            <span class="stat-lbl">Open-Weight Core</span>
+          </div>
+          <div class="stat-item-3d">
+            <span class="stat-val">Hands-Free</span>
+            <span class="stat-lbl">Audio Kitchen Mode</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <img src="assets/hero.jpg" alt="Rustic Heirloom Kitchen with Audio Waveform and Recipe Journal" loading="lazy">
+        <div class="hero-media-overlay"></div>
+        
+        <!-- 3D Floating Interactive Chips -->
+        <div class="floating-3d-chip chip-audio">
+          <span class="chip-icon">🎙️</span>
+          <div class="chip-text">
+            <strong>Nonno's Audio Memo</strong>
+            <span>1:42 • 100% On-Device</span>
+          </div>
+          <div class="mini-eq-bars" aria-hidden="true">
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+            <span class="eq-bar"></span>
+          </div>
+        </div>
+
+        <div class="floating-3d-chip chip-secret">
+          <span class="chip-icon">💡</span>
+          <div class="chip-text">
+            <strong>Secret Technique</strong>
+            <span>Grated nutmeg & whole milk reduction</span>
+          </div>
+        </div>
+
+        <div class="hero-floating-badge">
+          <div class="gemma-orb"></div>
+          <span>Gemma Open Model Ready</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Studio Application Grid -->
+    <div class="app-grid">
+      
+      <!-- Left Studio Controls -->
+      <aside class="studio-card">
+        <div class="card-header-bar">
+          <h2><span>🎙️</span> Voice Memo Studio</h2>
+          <span style="font-size: 0.75rem; color: var(--text-tertiary); font-family: var(--font-mono);">Step 1: Input</span>
+        </div>
+
+        <div class="card-body">
+          <!-- Input Mode Tabs -->
+          <div class="input-tabs">
+            <button id="tabPresets" class="input-tab active" data-tab="presets">
+              <span>📚</span> Presets
+            </button>
+            <button id="tabRecord" class="input-tab" data-tab="record">
+              <span>🔴</span> Record
+            </button>
+            <button id="tabUpload" class="input-tab" data-tab="upload">
+              <span>📁</span> Upload
+            </button>
+          </div>
+
+          <!-- Tab Content: Presets -->
+          <div id="tabContentPresets" class="tab-pane">
+            <div class="preset-list" id="presetListContainer">
+              <!-- Dynamically populated from recipes-data.js -->
+            </div>
+          </div>
+
+          <!-- Tab Content: Live Record with 3D Spherical Jewel Button -->
+          <div id="tabContentRecord" class="tab-pane" style="display: none;">
+            <div class="recorder-box">
+              <div class="mic-sphere-container">
+                <div class="sonar-ring ring-1"></div>
+                <div class="sonar-ring ring-2"></div>
+                <button id="micRecordBtn" class="mic-circle-btn" title="Start Recording Voice Memo">
+                  🎤
+                </button>
+              </div>
+              <div class="recorder-status" id="recorderStatusText">Tap to record live voice memo</div>
+              <div class="recorder-sub" id="recorderTimerText">Speak your recipe memories or family secrets</div>
+              <canvas id="waveformCanvas" class="waveform-canvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Tab Content: Upload -->
+          <div id="tabContentUpload" class="tab-pane" style="display: none;">
+            <label class="file-upload-box" for="audioFileInput">
+              <div class="upload-icon">🎵</div>
+              <p style="font-weight: 600; margin-bottom: 0.25rem;">Drop audio voice memo here</p>
+              <p style="font-size: 0.78rem; color: var(--text-tertiary);">Supports .mp3, .m4a, .wav, .ogg</p>
+              <input type="file" id="audioFileInput" accept="audio/*" style="display: none;">
+            </label>
+          </div>
+
+          <!-- Dedication Person -->
+          <div class="dedication-group">
+            <label for="friendNameInput">
+              <span>Dedicated To (Friend or Loved One)</span>
+              <span style="font-size: 0.72rem; color: var(--primary-600);">Build for a Friend</span>
+            </label>
+            <input type="text" id="friendNameInput" class="friend-name-input" placeholder="e.g. Marco's Nonno Giuseppe" value="Marco’s Nonno Giuseppe">
+          </div>
+
+          <!-- Audio Player Bar -->
+          <div class="audio-player-bar" id="audioPlayerBar">
+            <button id="audioPlayBtn" class="audio-play-trigger" title="Play / Pause Audio Memo">▶</button>
+            <div class="audio-track-info">
+              <div class="audio-track-title" id="audioTrackTitle">Nonno Giuseppe’s Voice Note</div>
+              <div class="audio-track-meta" id="audioTrackMeta">Duration: 1:42 • High Fidelity Audio</div>
+            </div>
+          </div>
+
+          <!-- Raw Spoken Transcript Box -->
+          <div class="transcript-preview-box">
+            <div class="transcript-preview-text" id="transcriptText">
+              Loading voice transcript...
+            </div>
+          </div>
+
+          <!-- Transform CTA -->
+          <button id="transformBtn" class="transform-btn">
+            <span>✨ Structure with Gemma AI</span>
+          </button>
+
+          <!-- Engine Status Pill -->
+          <div class="engine-status-row">
+            <span>Open Core: <strong id="engineModelName">Gemma 2 (9B-IT)</strong></span>
+            <span id="engineSettingsPill" class="engine-pill">⚙️ Configure</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Presentation Board -->
+      <section class="recipe-board">
+        
+        <!-- Processing State (Visible during AI structuring) -->
+        <div id="processingCard" class="processing-card">
+          <div class="processing-spinner"></div>
+          <h3 class="processing-step-text" id="processingStatusTitle">Gemma AI is Listening & Structuring...</h3>
+          <p class="processing-subtext" id="processingStatusDesc">
+            Analyzing spoken nuances, normalizing unmeasured pinches and splashes, and identifying heirloom secret techniques.
+          </p>
+          <div class="processing-terminal" id="processingTerminalOutput">
+            [INIT] Connecting to Google Gemma Open-Weights Runtime...
+          </div>
+        </div>
+
+        <!-- Main Heirloom Recipe Card -->
+        <article id="heirloomRecipeCard" class="heirloom-card theme-parchment">
+          
+          <!-- Top Hero Strip -->
+          <div class="recipe-hero-strip">
+            <div class="recipe-top-bar">
+              <span class="dedication-badge" id="cardDedicationBadge">
+                <span>❤️</span> <span id="cardDedicationText">Dedicated to Marco’s Nonno Giuseppe</span>
+              </span>
+
+              <div class="recipe-actions">
+                <button id="btnCookMode" class="action-btn primary" title="Full-screen step by step hands-free kitchen helper">
+                  <span>🍳</span> Hands-Free Cook Mode
+                </button>
+                <button id="btnVoiceListen" class="action-btn" title="Narrate with ElevenLabs">
+                  <span>🔊</span> Listen
+                </button>
+                <button id="btnGroceryModal" class="action-btn" title="Generate Smart Grocery & Market List">
+                  <span>🛒</span> Grocery List
+                </button>
+                <button id="btnAdaptationsModal" class="action-btn" title="Dietary Variations & Smart Ingredient Swaps">
+                  <span>🌱</span> Adaptations
+                </button>
+                <button id="btnSaveVault" class="action-btn" title="Save this Recipe into your Heirloom Vault">
+                  <span>💾</span> Save
+                </button>
+                <button id="btnPrintCard" class="action-btn" title="Print physical heirloom recipe card">
+                  <span>🖨️</span> Print
+                </button>
+                <button id="btnExportMarkdown" class="action-btn" title="Copy as Markdown">
+                  <span>📋</span> Markdown
+                </button>
+              </div>
+            </div>
+
+            <!-- Active Adaptation Alert (Shown when a dietary variant is selected) -->
+            <div id="adaptationAlertBanner" class="adaptation-banner" style="display: none;">
+              <div class="adaptation-banner-content">
+                <span id="adaptationBannerIcon">🌱</span>
+                <div>
+                  <strong id="adaptationBannerTitle">Plant-Based Variation Active</strong>
+                  <div id="adaptationBannerNote" style="font-size: 0.8rem; opacity: 0.9;">Gemma AI adapted proteins and dairy while preserving authentic heirloom flavor.</div>
+                </div>
+              </div>
+              <button id="btnResetAdaptation" class="btn-reset-adaptation" title="Reset to original heirloom recipe">
+                ✕ Revert to Original
+              </button>
+            </div>
+
+            <h2 class="recipe-main-title" id="cardRecipeTitle">Nonno Giuseppe’s 3-Hour Slow Braised Ragu</h2>
+            <p class="recipe-origin-quote" id="cardOriginQuote">
+              "A three-generation family recipe passed down by ear, never written in a cookbook until now."
+            </p>
+
+            <div class="recipe-meta-ribbon" id="cardMetaRibbon">
+              <span class="meta-pill">⏱️ Prep: <strong id="cardPrepTime">25 mins</strong></span>
+              <span class="meta-pill">🔥 Cook: <strong id="cardCookTime">3 hrs</strong></span>
+              <span class="meta-pill">🍽️ Servings: <strong id="cardServings">6 servings</strong></span>
+              <span class="meta-pill">🏷️ Level: <strong id="cardDifficulty">Intermediate</strong></span>
+              
+              <!-- Unit Switcher -->
+              <div class="unit-toggle-group" title="Switch between US Customary and Metric units">
+                <button id="btnUnitImperial" class="unit-toggle-btn active">US / Imperial</button>
+                <button id="btnUnitMetric" class="unit-toggle-btn">Metric</button>
+              </div>
+
+              <!-- Card Style Selector -->
+              <div class="theme-style-select-wrap" title="Change visual card presentation">
+                <span>🎴</span>
+                <select id="cardThemeSelect" class="card-style-select">
+                  <option value="parchment">📜 Parchment</option>
+                  <option value="hearth">🏺 Hearth</option>
+                  <option value="modern">🌿 Minimal</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recipe Body Content (Two Column Split) -->
+          <div class="recipe-content-grid">
+            
+            <!-- Left: Ingredients Pane -->
+            <div class="ingredients-pane">
+              <div class="section-label">
+                <span>Ingredients</span>
+                <div class="servings-stepper">
+                  <button id="btnServingsMinus" class="stepper-btn" title="Decrease servings">-</button>
+                  <span id="servingsCounter">6</span>
+                  <button id="btnServingsPlus" class="stepper-btn" title="Increase servings">+</button>
+                </div>
+              </div>
+
+              <ul class="ingredients-list" id="ingredientsListContainer">
+                <!-- Injected via JavaScript -->
+              </ul>
+
+              <!-- Friend's Pro Tip / Family Secret Box -->
+              <div class="secret-tip-box" id="secretTipContainer">
+                <div class="secret-tip-header">
+                  <span>💡</span> <span id="secretTipTitle">Nonno's Secret Spice & Milk Technique</span>
+                </div>
+                <div class="secret-tip-body" id="secretTipBody">
+                  Grate fresh nutmeg and reduce a half cup of milk into the sautéed soffritto before the red wine. This tenderizes the meat fibers and rounds out tomato acidity.
+                </div>
+              </div>
+
+              <!-- Gemma Sommelier & Heritage Pairing -->
+              <div class="heritage-pairing-box" id="heritagePairingContainer">
+                <div class="pairing-header">
+                  <span>🍷</span> <span>Gemma Sommelier & Heritage Pairing</span>
+                </div>
+                <div class="pairing-body">
+                  <div class="pairing-row">
+                    <span class="pairing-label">Traditional:</span>
+                    <strong id="pairingWine" class="pairing-val">Chianti Classico Riserva DOCG</strong>
+                  </div>
+                  <div class="pairing-row">
+                    <span class="pairing-label">Alcohol-Free:</span>
+                    <strong id="pairingAlcoholFree" class="pairing-val">Sparkling Blackberry & Rosemary Shrub</strong>
+                  </div>
+                  <p id="pairingNotes" class="pairing-notes">
+                    Firm tannins slice through rich rendered beef marrow.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Instructions Pane -->
+            <div class="instructions-pane">
+              <div class="section-label">
+                <span>Preparation & Method</span>
+                <span style="font-size: 0.8rem; font-weight: 500; color: var(--text-tertiary);" id="stepsCountLabel">6 Steps</span>
+              </div>
+
+              <div class="steps-list" id="stepsListContainer">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Fullscreen Hands-Free Kitchen Cook Mode Overlay -->
+  <div id="cookModeOverlay" class="cook-mode-overlay" role="dialog" aria-modal="true" aria-label="Hands Free Cooking Mode">
+    
+    <!-- Top Voice Assistant Banner -->
+    <div class="cook-voice-banner" id="cookVoiceBanner">
+      <div class="voice-pulse-ring">
+        <span class="voice-dot"></span>
+      </div>
+      <span id="cookVoiceStatusText">🎙️ Voice Commands: Say "Next", "Back", "Repeat", "Start Timer", or "Exit"</span>
+      <button id="btnToggleVoiceCommands" class="cook-voice-toggle-btn" title="Toggle Hands-Free Voice Control">
+        Voice: Active
+      </button>
+    </div>
+
+    <div class="cook-header">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <span style="font-size: 1.5rem;">🍳</span>
+        <div>
+          <h2 style="font-family: var(--font-serif); font-size: 1.3rem;" id="cookModeRecipeTitle">Cooking Mode</h2>
+          <span style="font-size: 0.78rem; color: var(--text-tertiary);" id="cookModeProgressText">Step 1 of 6</span>
+        </div>
+      </div>
+      <button id="btnExitCookMode" class="action-btn" title="Exit Cook Mode">✕ Close</button>
+    </div>
+
+    <div class="cook-center-stage">
+      <span class="cook-step-pill" id="cookStepBadge">STEP 1</span>
+      <h3 class="cook-instruction-title" id="cookStepTitle">Caramelize & Brown Meats</h3>
+      <p class="cook-instruction-desc" id="cookStepDesc">
+        Heat olive oil in a heavy Dutch oven over medium-high heat. Season beef and ribs with salt. Sear all sides until deep golden brown.
+      </p>
+
+      <div class="cook-timer-widget" id="cookTimerWidget">
+        <div>
+          <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-tertiary); font-weight: 600;">Kitchen Timer</span>
+          <div class="cook-timer-digits" id="cookTimerDisplay">10:00</div>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button id="btnStartCookTimer" class="action-btn primary">Start</button>
+          <button id="btnResetCookTimer" class="action-btn">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cook-controls">
+      <button id="btnPrevCookStep" class="cook-nav-btn">← Previous Step</button>
+      <button id="btnSpeakCookStep" class="cook-nav-btn" style="background: var(--primary-50); color: var(--primary-700);">
+        <span>🔊</span> Repeat Voice Guidance
+      </button>
+      <button id="btnNextCookStep" class="cook-nav-btn primary">Next Step →</button>
+    </div>
+  </div>
+
+  <!-- Modal: Smart Grocery & Market List -->
+  <div id="groceryModal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3><span>🛒</span> Smart Market & Grocery List</h3>
+        <button class="modal-close-btn" data-close="groceryModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          Ingredients categorized by supermarket aisle, scaled to your current serving size. Cross off items as you shop, or export directly to WhatsApp or Messages!
+        </p>
+
+        <div class="grocery-summary-bar">
+          <span id="groceryServingsLabel">Servings: <strong>6</strong></span>
+          <span id="groceryItemsCount"><strong>12</strong> items total</span>
+          <button id="btnResetGroceryChecks" class="grocery-text-action">Reset Checkboxes</button>
+        </div>
+
+        <div class="grocery-categories-container" id="groceryCategoriesContainer">
+          <!-- Dynamically populated aisle categories -->
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap;">
+          <button id="btnPrintGrocery" class="action-btn">
+            <span>🖨️</span> Print List
+          </button>
+          <button id="btnCopyWhatsApp" class="action-btn primary">
+            <span>📱</span> Copy for WhatsApp / Messages
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Dietary Adaptations & Ingredient Swaps -->
+  <div id="adaptationsModal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3><span>🌱</span> Gemma AI Dietary Adaptations & Swaps</h3>
+        <button class="modal-close-btn" data-close="adaptationsModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          Preserve generational family recipes across dietary lifestyles. Google Gemma AI recalculates fats, starches, and cooking methods so no one misses out at family dinner.
+        </p>
+
+        <div class="dietary-buttons-grid">
+          <button class="diet-option-card" data-diet="vegan">
+            <span class="diet-icon">🌱</span>
+            <div class="diet-info">
+              <strong>Plant-Based / Vegan</strong>
+              <span>Umami portobello, lentils & oat emulsions</span>
+            </div>
+          </button>
+
+          <button class="diet-option-card" data-diet="gluten_free">
+            <span class="diet-icon">🌾</span>
+            <div class="diet-info">
+              <strong>Gluten-Free Certified</strong>
+              <span>Artisan rice, corn & xanthan blends</span>
+            </div>
+          </button>
+
+          <button class="diet-option-card" data-diet="dairy_free">
+            <span class="diet-icon">🥛</span>
+            <div class="diet-info">
+              <strong>100% Dairy-Free</strong>
+              <span>Cold-pressed olive oil & cashew cream</span>
+            </div>
+          </button>
+
+          <button class="diet-option-card" data-diet="low_sodium">
+            <span class="diet-icon">❤️</span>
+            <div class="diet-info">
+              <strong>Heart-Healthy Low Sodium</strong>
+              <span>Citrus zest, sumac & potassium balance</span>
+            </div>
+          </button>
+        </div>
+
+        <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 1.5rem 0;">
+
+        <!-- Smart Pantry Ingredient Substitution Assistant -->
+        <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+          <span>🔍</span> Smart Pantry Substitution Assistant
+        </h4>
+        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+          Missing an ingredient? Select an item below to see Gemma AI's chef-approved pantry swap:
+        </p>
+        
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+          <select id="swapIngredientSelect" class="friend-name-input" style="flex: 1;">
+            <!-- Populated with recipe ingredients -->
+          </select>
+          <button id="btnCheckSwap" class="action-btn primary">Find Swap</button>
+        </div>
+
+        <div id="swapResultBox" class="swap-result-box" style="display: none;">
+          <div style="font-weight: 600; color: var(--primary-700); margin-bottom: 0.25rem;" id="swapResultTitle">Recommended Substitute:</div>
+          <div id="swapResultSubstitute" style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem;"></div>
+          <p id="swapResultRationale" style="font-size: 0.82rem; color: var(--text-secondary);"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Heirloom Recipe Vault & Personal Cookbook -->
+  <div id="vaultModal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-container" style="max-width: 720px;">
+      <div class="modal-header">
+        <h3><span>📖</span> Family Heirloom Recipe Vault</h3>
+        <button class="modal-close-btn" data-close="vaultModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          Your private offline archive of family voice recipes. Stored 100% locally in your browser with zero cloud tracking.
+        </p>
+
+        <div class="vault-toolbar">
+          <input type="text" id="vaultSearchInput" class="vault-search-input" placeholder="🔍 Search family recipes, tags, or loved ones...">
+          <div style="display: flex; gap: 0.5rem;">
+            <button id="btnSaveCurrentToVault" class="action-btn primary" title="Save current recipe to vault">
+              <span>➕</span> Save Current
+            </button>
+            <button id="btnExportVaultJson" class="action-btn" title="Download backup JSON of all family recipes">
+              <span>📥</span> Backup
+            </button>
+            <label class="action-btn" style="cursor: pointer;" title="Import recipes from a backup JSON">
+              <span>📤</span> Restore
+              <input type="file" id="vaultImportFileInput" accept=".json" style="display: none;">
+            </label>
+          </div>
+        </div>
+
+        <div class="vault-recipes-grid" id="vaultRecipesContainer">
+          <!-- Dynamically populated vault recipe cards -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Why Open Innovation Matters -->
+  <div id="whyOpenModal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3><span>💡</span> Why Open Innovation Matters</h3>
+        <button class="modal-close-btn" data-close="whyOpenModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
+          In the <strong>Hacktoberfest Weekend Challenge</strong>, judges ask: <em>"Tell us where your open-based approach worked better than a closed one."</em> Here is why building <strong>KitchenTales</strong> on open-weight AI (Google Gemma) is fundamentally superior to closed proprietary APIs:
+        </p>
+
+        <div class="comparison-grid">
+          <div class="comp-col open">
+            <h4 class="comp-title" style="color: var(--primary-700);">
+              <span>✅</span> Open-Source AI (Gemma 2)
+            </h4>
+            <ul class="comp-list">
+              <li><strong>Zero Cloud Leakage:</strong> Intimate family voice memos and generational recipes never touch third-party training pipelines.</li>
+              <li><strong>Offline in Every Kitchen:</strong> Runs in a remote cabin, seaside cottage, or farmhouse kitchen without Wi-Fi or cellular service.</li>
+              <li><strong>Zero Per-Token Bills:</strong> Preserving 500 family voice recordings costs $0.00 in recurring API meter charges.</li>
+              <li><strong>Model Freedom:</strong> Can be fine-tuned on regional dialects, colloquial slang, or swapped between Gemma 2B and 9B effortlessly.</li>
+            </ul>
+          </div>
+
+          <div class="comp-col closed">
+            <h4 class="comp-title" style="color: var(--text-secondary);">
+              <span>⚠️</span> Proprietary Closed APIs
+            </h4>
+            <ul class="comp-list">
+              <li><strong>Data Silos:</strong> Private conversations and voice notes sent across third-party commercial servers.</li>
+              <li><strong>Requires Continuous Internet:</strong> Completely breaks if the kitchen has poor reception or when offline.</li>
+              <li><strong>Per-Token Meter:</strong> Recurring monthly costs that scale with every minute of audio processed.</li>
+              <li><strong>Vendor Lock-in:</strong> Model deprecations, price hikes, and rate limits outside your control.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-surface-subtle); padding: 1rem 1.25rem; border-radius: var(--radius-md); font-size: 0.85rem; border: 1px solid var(--border-subtle);">
+          <strong>Google Gemma 2 Partner Alignment:</strong> Gemma’s 2B and 9B open architecture provides state-of-the-art reasoning at a footprint compact enough to run directly on consumer laptops, making private local culinary preservation a reality.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: DEV.to Write-Up Generator -->
+  <div id="devExportModal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3><span>📝</span> Hacktoberfest DEV.to Submission</h3>
+        <button class="modal-close-btn" data-close="devExportModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.88rem; color: var(--text-secondary);">
+          Here is your complete, ready-to-publish article using the official Hacktoberfest Weekend Challenge DEV template. Formatted with your current recipe and partner categories!
+        </p>
+        <textarea id="devMarkdownTextarea" class="dev-export-area" readonly></textarea>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button id="btnCopyDevMarkdown" class="action-btn primary">
+            <span>📋</span> Copy to Clipboard
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Settings (Gemma & ElevenLabs) -->
+  <div id="settingsModal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3><span>⚙️</span> Open AI & Voice Engine Settings</h3>
+        <button class="modal-close-btn" data-close="settingsModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- Gemma Config -->
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <h4 style="font-size: 0.95rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem;">
+            <span>🤖</span> Google Gemma Open-Weights Runtime
+          </h4>
+          <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);">Execution Backend</label>
+          <select id="settingEndpointType" class="friend-name-input">
+            <option value="local_pipeline">Built-In Client Open Pipeline (Instant, Offline & Zero-Setup)</option>
+            <option value="ollama">Local Ollama Instance (http://localhost:11434)</option>
+            <option value="google_api">Google AI Gemma API (models/gemma-2-9b-it)</option>
+          </select>
+
+          <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);">Gemma Model</label>
+          <select id="settingGemmaModel" class="friend-name-input">
+            <option value="gemma-2-9b-it">gemma-2-9b-it (High Reasoning & Nuance)</option>
+            <option value="gemma-2-2b-it">gemma-2-2b-it (Ultra Lightweight & Fast)</option>
+            <option value="gemma-2-27b-it">gemma-2-27b-it (Culinary Master)</option>
+          </select>
+
+          <div id="ollamaSettingsRow" style="display: none; flex-direction: column; gap: 0.4rem;">
+            <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);">Ollama Endpoint URL</label>
+            <input type="text" id="settingOllamaUrl" class="friend-name-input" value="http://localhost:11434">
+          </div>
+
+          <div id="googleApiSettingsRow" style="display: none; flex-direction: column; gap: 0.4rem;">
+            <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);">Google AI Studio API Key (Optional)</label>
+            <input type="password" id="settingApiKey" class="friend-name-input" placeholder="AIzaSy...">
+          </div>
+        </div>
+
+        <hr style="border: none; border-top: 1px solid var(--border-subtle);">
+
+        <!-- ElevenLabs Config -->
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <h4 style="font-size: 0.95rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem;">
+            <span>🔊</span> ElevenLabs Voice Synthesis (Partner Category)
+          </h4>
+          <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);">ElevenLabs API Key (Optional)</label>
+          <input type="password" id="settingElevenLabsKey" class="friend-name-input" placeholder="xi-api-key (leaves blank for browser native speech synthesis)">
+          
+          <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);">Narrator Voice Profile</label>
+          <select id="settingElevenLabsVoice" class="friend-name-input">
+            <option value="21m00Tcm4TlvDq8ikWAM">Rachel — Warm, Calm & Expressive</option>
+            <option value="pNInz6obpgDQGcFmaJgB">Adam — Deep, Narrative Grandfatherly Tone</option>
+            <option value="ErXwobaYiN019PkySvjV">Antoni — Crisp, Culinary Instructor</option>
+            <option value="EXAVITQu4vr4xnSDxMaL">Bella — Gentle, Friendly Home Cook</option>
+          </select>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem;">
+          <button id="btnSaveSettings" class="action-btn primary">Save Configuration</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastNotification" class="toast-notification"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <strong>KitchenTales</strong> — Built with ❤️ for the Hacktoberfest Weekend Challenge: <em>Build for a Friend</em>.
+      </div>
+      <div>
+        Powered by Open AI: <strong>Google Gemma 2</strong> + <strong>ElevenLabs</strong>
+      </div>
+    </div>
+  </footer>
+
+  <!-- App Script Entrypoint -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
